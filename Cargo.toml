@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-polars = { version = "0.52.0", features = ["lazy"] }
+polars = { version = "0.51.0", features = ["lazy", "fmt"] }
 
 [[bin]]
 name = "plug-parsec"
