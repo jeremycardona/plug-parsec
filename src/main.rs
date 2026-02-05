@@ -1,5 +1,30 @@
 use polars::prelude::*;
 use std::sync::Arc;
+use std::path::Path;
+
+
+fn validate_and_read_csv(csv_file: &str, schema: SchemaRef) -> PolarsResult<LazyFrame> {
+    let path = Path::new(csv_file);
+
+    // check path and file
+    if !path.exists() {
+        return Err(PolarsError::ComputeError(
+            format!("File not found: {}", csv_file).into()
+        ));
+    }
+
+    if !path.is_file() {
+        return Err(PolarsError::ComputeError(
+            format!("Path is not a file: {}", csv_file).into()
+        ));
+    }
+
+    // returns pl reader
+    LazyCsvReader::new(PlPath::new(csv_file))
+        .with_has_header(true)
+        .with_dtype_overwrite(Some(schema))
+        .finish()
+}
 
 fn load_csv(csv_file: &str) -> LazyFrame {
     // define digits and decimal places fixed to two.
@@ -27,12 +52,9 @@ fn load_csv(csv_file: &str) -> LazyFrame {
     // arc - multi threading and sharing across many cpu cores (threads, processes)
     let schema_arc = Arc::new(schema);
     // reader 
-    let reader_lazy_frame = LazyCsvReader::new(PlPath::new(csv_file))
-        .with_has_header(true)
-        .with_dtype_overwrite(Some(schema_arc))
-        .finish();
+    let reader_lazy_frame = validate_and_read_csv(csv_file, schema_arc);
 
-    match reader_lazy_frame{
+    match reader_lazy_frame {
         Ok(data) => {
             println!("Successfully loaded: {}", csv_file);
             
@@ -53,6 +75,9 @@ fn main() {
 
     // lazy data frame to manipulate
     let frame = load_csv("data.csv");
+
+    // collect() performs IO and computations
+    // expects checks for the collected results
     let data_frame = frame.collect().expect("Failed to process data");
 
     println!("{}", data_frame);
