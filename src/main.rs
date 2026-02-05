@@ -1,8 +1,35 @@
 use polars::prelude::*;
+use std::sync::Arc;
 
 fn load_csv(csv_file: &str) -> LazyFrame {
+    // define digits and decimal places fixed to two.
+    let precision = Some(38);
+    let scale = Some(2);
+
+    // data type to currency.
+    let decimal_type = DataType::Decimal(precision, scale);
+
+    // list of csv columns names
+    let csv_cols = [
+        "Gross Pay",
+        "Deductions",
+        "Federal Income Tax",
+        "Social Security Tax",
+        "Medicare Tax",
+        "State Income Tax",
+    ];
+
+    // map schema columns name to Decimal type (currency data)
+    let schema: Schema = csv_cols
+        .iter()
+        .map(|&name| Field::new(name.into(), decimal_type.clone()))
+        .collect();
+    // arc - multi threading and sharing across many cpu cores (threads, processes)
+    let schema_arc = Arc::new(schema);
+    // reader 
     let reader_lazy_frame = LazyCsvReader::new(PlPath::new(csv_file))
         .with_has_header(true)
+        .with_dtype_overwrite(Some(schema_arc))
         .finish();
 
     match reader_lazy_frame{
