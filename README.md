@@ -1,12 +1,11 @@
-# Plug Parser - READ ME FIRST
+# Plug Parsec - READ ME FIRST
 
-Demonstration of how to write a parser with Rust.
-The parser combinator library that will be used will be **nom**.
+Data integration for USD currency comma separated sheet (CSV) 
 
 ## Dependencies
 
 ### Pola.rs - for data manipulation
 
-Features used: lazy.
+Features used: lazy api. (check Cargo.toml for details.)
 
 ### idk if i really need nom for a parser cqombinator
