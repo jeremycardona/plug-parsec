@@ -1,0 +1,1 @@
+rd_("Cbfoo is function rustdoc defaults to generating \xe2\x80\xa6")
