@@ -1,11 +1,13 @@
 [package]
 name = "plug-parsec"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
 
 [dependencies]
-polars = { version = "0.51.0", features = ["lazy", "fmt", "dtype-decimal"] }
+csv = "1.4.0"
+# polars = { version = "0.51.0", features = ["lazy", "fmt", "dtype-decimal"] }
 
 [[bin]]
 name = "plug-parsec"
 path = "./src/main.rs"
+
