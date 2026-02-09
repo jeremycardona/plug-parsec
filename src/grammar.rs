@@ -15,7 +15,7 @@ fn bill() -> Currency {
 fn coin(variant_c: Currency) -> i128 {
     1i128
 }
-fn print_currency (c: i128) -> String {
+fn format_currency (c: i128) -> String {
     format!("pennies: {c}")
 }
 fn main() {
