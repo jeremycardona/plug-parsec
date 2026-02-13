@@ -1,6 +1,6 @@
 # Plug Parsec - READ ME FIRST
 
-Data integration for USD currency comma separated sheet (CSV) 
+Data integration for USD currency comma separated sheet (CSV)
 
 ## Dependencies
 
@@ -8,4 +8,16 @@ Data integration for USD currency comma separated sheet (CSV)
 
 Features used: lazy api. (check Cargo.toml for details.)
 
-### idk if i really need nom for a parser cqombinator
+## Parsec folder explained
+
+The files are not entirely organized and some of the files are still messy.
+
+- grammar
+- lexer
+- syntax
+- semantics
+Not completed.
+
+### Bin.rs
+
+This is pretty much where the documentation lives.
