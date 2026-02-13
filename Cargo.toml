@@ -5,6 +5,8 @@ edition = "2021"
 
 [dependencies]
 csv = "1.4.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0.149"
 # polars = { version = "0.51.0", features = ["lazy", "fmt", "dtype-decimal"] }
 
 [[bin]]
